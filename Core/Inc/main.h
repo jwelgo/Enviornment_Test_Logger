@@ -59,7 +59,21 @@ void Error_Handler(void);
 /* Private defines -----------------------------------------------------------*/
 
 /* USER CODE BEGIN Private defines */
+#define STATUS_LED_PIN GPIO_PIN_1
+#define STATUS_LED_PORT GPIOB
+#define SD_CS_PIN GPIO_PIN_6
+#define SD_CS_PORT GPIOA
+#define ACCEL_CS_PIN GPIO_PIN_12
+#define ACCEL_CS_PORT GPIOA
+#define TEMP_CS_PIN GPIO_PIN_11
+#define TEMP_CS_PORT GPIOA
+#define BARO_CS_PIN GPIO_PIN_12
+#define BARO_CS_PORT GPIOB
 
+#define STATUS_LED_LOW()										\
+	HAL_GPIO_WritePin(STATUS_LED_PORT, STATUS_LED_PIN, RESET)
+#define STATUS_LED_HIGH()										\
+	HAL_GPIO_WritePin(STATUS_LED_PORT, STATUS_LED_PIN, SET)
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus

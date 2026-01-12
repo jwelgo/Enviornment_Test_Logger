@@ -101,7 +101,13 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
+	  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1, SET);    // PB1 pin HIGH
 
+	  HAL_Delay(100);   // delay 100 millis
+
+	  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1, RESET);  // PB1 pin LOW
+
+	  HAL_Delay(100);   // delay 100 millis
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
