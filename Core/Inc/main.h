@@ -51,7 +51,7 @@ typedef enum {
 
 /* Exported constants --------------------------------------------------------*/
 /* USER CODE BEGIN EC */
-
+#define MAX_RETRIES 0x1F4
 /* USER CODE END EC */
 
 /* Exported macro ------------------------------------------------------------*/
@@ -64,7 +64,8 @@ void Error_Handler(void);
 
 /* USER CODE BEGIN EFP */
 sys_status_t storage_init();
-sys_status_t storage_error();
+sys_status_t sensor_init();
+sys_status_t storage_error(int max_retries);
 void log_halt();
 /* USER CODE END EFP */
 

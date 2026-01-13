@@ -68,51 +68,48 @@ static void MX_SPI2_Init(void);
 int main(void)
 {
 
-  /* USER CODE BEGIN 1 */
+  /* System Init -------------------------------------------------------------*/
 
-  /* USER CODE END 1 */
+  HAL_Init();  // Reset of all peripherals, Initializes the Flash interface and the Systick.
 
-  /* MCU Configuration--------------------------------------------------------*/
+  SystemClock_Config();  // Configure the system clock
 
-  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-  HAL_Init();
+  /* Initialize all configured peripheral interfaces */
+  MX_GPIO_Init();  // GPIO: Status LED and CS pins
+  MX_SPI1_Init();  // SPI1: MicroSD Card slot
+  MX_SPI2_Init();  // SPI2: Sensor ICs
 
-  /* USER CODE BEGIN Init */
+  /* Storage Init ------------------------------------------------------------*/
 
-  /* USER CODE END Init */
+  sys_status_t storage = storage_init();  // Attempt to initialize storage
 
-  /* Configure the system clock */
-  SystemClock_Config();
-
-  /* USER CODE BEGIN SysInit */
-
-  /* USER CODE END SysInit */
-
-  /* Initialize all configured peripherals */
-  MX_GPIO_Init();
-  MX_SPI1_Init();
-  MX_SPI2_Init();
-  /* USER CODE BEGIN 2 */
-  sys_status_t response = storage_init();
-
-  if (response != OK) {
-  	  sys_status_t fallback = storage_error();
+  if (storage != OK) {
+  	  sys_status_t fallback = storage_error(MAX_RETRIES);  // Enter retry loop upon initial failure
 
   	  if (fallback != OK) {
-  		  log_halt();
+  		  log_halt();    // Halt system after max retires
   	  }
   }
-  /* USER CODE END 2 */
+
+  /* Sensor Init -------------------------------------------------------------*/
+
+  sys_status_t sensor = sensor_init();  // Attempt to initialize sensors
+
+  if (sensor != OK) {
+	  log_halt();    // Halt system
+  }
+
+  /* Init Logic Complete -----------------------------------------------------*/
 
   /* Infinite loop */
-  /* USER CODE BEGIN WHILE */
   while (1)
   {
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
   }
-  /* USER CODE END 3 */
+
+  /* Finalize Log ------------------------------------------------------------*/
 }
 
 /**
@@ -283,7 +280,12 @@ sys_status_t storage_init(){
 }
 
 
-sys_status_t storage_error() {
+sys_status_t sensor_init() {
+	return ERR;
+}
+
+
+sys_status_t storage_error(int max_retries) {
 	return ERR;
 }
 
