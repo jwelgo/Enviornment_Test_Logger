@@ -47,11 +47,21 @@ typedef enum {
 	ERR,
 	FATAL
 } sys_status_t;
+
+typedef struct {
+	float tmstp;
+	float accel_x;
+	float accel_y;
+	float accel_z;
+	float pressure;
+	float temp;
+} log_packet_t;
 /* USER CODE END ET */
 
 /* Exported constants --------------------------------------------------------*/
 /* USER CODE BEGIN EC */
 #define MAX_RETRIES 0x1F4
+#define LOG_BUFFER_SIZE sizeof(log_packet_t) * 6;
 /* USER CODE END EC */
 
 /* Exported macro ------------------------------------------------------------*/
@@ -66,7 +76,6 @@ void Error_Handler(void);
 sys_status_t storage_init();
 sys_status_t sensor_init();
 sys_status_t storage_error(int max_retries);
-void log_halt();
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/

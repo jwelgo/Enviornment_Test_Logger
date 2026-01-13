@@ -87,7 +87,7 @@ int main(void)
   	  sys_status_t fallback = storage_error(MAX_RETRIES);  // Enter retry loop upon initial failure
 
   	  if (fallback != OK) {
-  		  log_halt();    // Halt system after max retires
+  		  Error_Handler();    // Halt system after max retires
   	  }
   }
 
@@ -96,7 +96,7 @@ int main(void)
   sys_status_t sensor = sensor_init();  // Attempt to initialize sensors
 
   if (sensor != OK) {
-	  log_halt();    // Halt system
+	  Error_Handler();    // Halt system
   }
 
   /* Init Logic Complete -----------------------------------------------------*/
@@ -288,18 +288,6 @@ sys_status_t sensor_init() {
 sys_status_t storage_error(int max_retries) {
 	return ERR;
 }
-
-
-void log_halt()
-{
-	while (1)
-	{
-		STATUS_LED_HIGH();
-		STATUS_FATAL_DELAY();
-		STATUS_LED_LOW();
-		STATUS_FATAL_DELAY();
-	}
-}
 /* USER CODE END 4 */
 
 /**
@@ -313,6 +301,13 @@ void Error_Handler(void)
   __disable_irq();
   while (1)
   {
+	  HAL_GPIO_TogglePin(STATUS_LED_PORT, STATUS_LED_PIN);
+
+	  // Make the LED blink, HAL_DELAY() was just disabled by __disable_irq();
+	  for (volatile uint32_t i = 0; i < 2500000; i++)
+	  {
+		  __NOP();
+	  }
   }
   /* USER CODE END Error_Handler_Debug */
 }
