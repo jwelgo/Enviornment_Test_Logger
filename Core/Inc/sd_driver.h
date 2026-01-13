@@ -7,22 +7,15 @@
 #define __CORE_INC_SD_DRIVER_H
 
 // Includes
-#include <stdint.h>
-#include <stm32f3xx_hal.h>
-#include "stm32f3xx_hal_def.h"
-#include "stm32f3xx_hal_spi.h"
 #include "main.h"
 
 // Globals
 
 
 // GPIO Definitions
-#define SD_CS_PIN SD_CS_PIN
-#define SD_CS_PORT SD_CS_PORT
-
 #define SD_CS_LOW()										\
 	HAL_GPIO_WritePin(SD_CS_PORT, SD_CS_PIN, RESET)
-#define SD_CS_HIGH()										\
+#define SD_CS_HIGH()									\
 	HAL_GPIO_WritePin(SD_CS_PORT, SD_CS_PIN, SET)
 
 

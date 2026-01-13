@@ -21,7 +21,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include <String.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -93,7 +93,15 @@ int main(void)
   MX_SPI1_Init();
   MX_SPI2_Init();
   /* USER CODE BEGIN 2 */
+  sys_status_t response = storage_init();
 
+  if (response != OK) {
+  	  sys_status_t fallback = storage_error();
+
+  	  if (fallback != OK) {
+  		  log_halt();
+  	  }
+  }
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -101,13 +109,7 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-	  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1, SET);    // PB1 pin HIGH
 
-	  HAL_Delay(100);   // delay 100 millis
-
-	  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1, RESET);  // PB1 pin LOW
-
-	  HAL_Delay(100);   // delay 100 millis
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
@@ -276,7 +278,26 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+sys_status_t storage_init(){
+	return ERR;
+}
 
+
+sys_status_t storage_error() {
+	return ERR;
+}
+
+
+void log_halt()
+{
+	while (1)
+	{
+		STATUS_LED_HIGH();
+		STATUS_FATAL_DELAY();
+		STATUS_LED_LOW();
+		STATUS_FATAL_DELAY();
+	}
+}
 /* USER CODE END 4 */
 
 /**

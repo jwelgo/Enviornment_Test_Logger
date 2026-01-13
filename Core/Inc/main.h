@@ -31,12 +31,22 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include <stdio.h>
+#include <stdint.h>
+#include <stm32f3xx_hal.h>
+#include "stm32f3xx_hal_def.h"
+#include "stm32f3xx_hal_spi.h"
+#include "sd_driver.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
 /* USER CODE BEGIN ET */
-
+typedef enum {
+	OK = 0,
+	TIMEOUT,
+	ERR,
+	FATAL
+} sys_status_t;
 /* USER CODE END ET */
 
 /* Exported constants --------------------------------------------------------*/
@@ -53,7 +63,9 @@ extern "C" {
 void Error_Handler(void);
 
 /* USER CODE BEGIN EFP */
-
+sys_status_t storage_init();
+sys_status_t storage_error();
+void log_halt();
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
@@ -74,6 +86,9 @@ void Error_Handler(void);
 	HAL_GPIO_WritePin(STATUS_LED_PORT, STATUS_LED_PIN, RESET)
 #define STATUS_LED_HIGH()										\
 	HAL_GPIO_WritePin(STATUS_LED_PORT, STATUS_LED_PIN, SET)
+// delay 500 millis for fatal error
+#define STATUS_FATAL_DELAY()									\
+	HAL_Delay(500)
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus
