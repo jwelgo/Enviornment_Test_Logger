@@ -36,7 +36,7 @@ extern "C" {
 #include <stm32f3xx_hal.h>
 #include "stm32f3xx_hal_def.h"
 #include "stm32f3xx_hal_spi.h"
-#include "sd_driver.h"
+#include "user_diskio.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
@@ -84,7 +84,7 @@ sys_status_t storage_error(int max_retries);
 #define STATUS_LED_PIN GPIO_PIN_1
 #define STATUS_LED_PORT GPIOB
 #define SD_CS_PIN GPIO_PIN_6
-#define SD_CS_PORT GPIOA
+#define SD_CS_PORT GPIOB
 #define ACCEL_CS_PIN GPIO_PIN_12
 #define ACCEL_CS_PORT GPIOA
 #define TEMP_CS_PIN GPIO_PIN_11

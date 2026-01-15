@@ -29,8 +29,14 @@ typedef enum {
 	SD_NO_FIX
 } sd_status_t;
 
+
+typedef struct {
+
+} sd_packet_t;
+
 // Fucntion Prototypes
-sd_status_t create_file();
-sd_status_t write_file();
+sd_status_t sd_init(BYTE drv);
+sd_status_t sd_status(BYTE drv);
+
 
 #endif /* __CORE_INC_SD_DRIVER_H */

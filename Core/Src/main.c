@@ -18,6 +18,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "fatfs.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -84,11 +85,11 @@ int main(void)
   sys_status_t storage = storage_init();  // Attempt to initialize storage
 
   if (storage != OK) {
-  	  sys_status_t fallback = storage_error(MAX_RETRIES);  // Enter retry loop upon initial failure
+	  sys_status_t fallback = storage_error(MAX_RETRIES);  // Enter retry loop upon initial failure
 
-  	  if (fallback != OK) {
-  		  Error_Handler();    // Halt system after max retires
-  	  }
+	  if (fallback != OK) {
+		  Error_Handler();    // Halt system after max retires
+	  }
   }
 
   /* Sensor Init -------------------------------------------------------------*/
@@ -104,9 +105,9 @@ int main(void)
   /* Infinite loop */
   while (1)
   {
-    /* USER CODE END WHILE */
+	/* USER CODE END WHILE */
 
-    /* USER CODE BEGIN 3 */
+	/* USER CODE BEGIN 3 */
   }
 
   /* Finalize Log ------------------------------------------------------------*/
